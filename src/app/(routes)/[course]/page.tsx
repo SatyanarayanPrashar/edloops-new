@@ -7,7 +7,7 @@ export default function Course() {
             <div className="flex flex-col gap-2 w-[65%]">
                 <iframe
                 className="h-[70%] w-[100%] rounded-lg"
-                src="https://www.youtube.com/embed/dTu5dTEzVM4?si=nSBsv3Jfi4wXwPWN"
+                src="https://www.youtube.com/embed/mx0njuUNvT8?si=nSBsv3Jfi4wXwPWN"
                 title="YouTube video player"
                 allow="accelerometer; autoplay;clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
                 </iframe>
