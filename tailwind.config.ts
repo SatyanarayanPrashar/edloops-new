@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       keyframes: {
-        horizontalLoading: {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
+        gradient: {
+          '0%, 100%': { 'background-position': '0% 50%' },
+          '50%': { 'background-position': '100% 50%' },
         },
       },
       animation: {
-        'horizontal-loading': 'horizontalLoading 2s ease-in-out infinite',
+        gradient: 'gradient 3s ease infinite',
       },
     },
   },

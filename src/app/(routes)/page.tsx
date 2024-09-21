@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import SequentialImageConnections from '../components/curated-landing';
 
 export default function Home() {
   const [currentWord, setCurrentWord] = useState(0);
@@ -38,7 +37,7 @@ export default function Home() {
     <div className="bg-[#232736] flex flex-col items-cente text-white mx-[10rem]">
       <div className="-z-1 absolute inset-x-0 ins -top-0 h-[80%] w-full bg-transparent bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] opacity-10 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
       <div className=" mt-[7rem] text-center font-bold flex flex-col items-center">
-        <h1 className='text-[7rem]'>Learn with <span >AI</span></h1>
+        <h1 className='text-[7rem]'>Learn with AI</h1>
         <AnimatePresence mode="popLayout">
           <motion.div
             key={words[currentWord]}
@@ -94,7 +93,7 @@ export default function Home() {
           whileInView={ { scale: 1, opacity: 1 } }
           transition={{ duration: 0.6, ease: 'easeOut'}}
           viewport={{ once: true }}
-          className="flex-1 h-[14rem] bg-[#474747] text-white flex items-center justify-center rounded-lg shadow-lg"
+          className="flex-1 h-[14rem] bg-[#303346] text-white flex items-center justify-center rounded-lg shadow-lg"
         >
           <p className="text-xl font-bold">Pop-Out Card</p>
         </motion.div>
@@ -103,7 +102,7 @@ export default function Home() {
           whileInView={ { scale: 1, opacity: 1 } }
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}
           viewport={{ once: true }}
-          className="flex-1 h-[14rem] bg-[#474747] text-white flex items-center justify-center rounded-lg shadow-lg"
+          className="flex-1 h-[14rem] bg-[#303346] text-white flex items-center justify-center rounded-lg shadow-lg"
         >
           <p className="text-xl font-bold">Pop-Out Card</p>
         </motion.div>
@@ -112,7 +111,7 @@ export default function Home() {
           whileInView={ { scale: 1, opacity: 1 } }
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6}}
           viewport={{ once: true }}
-          className="flex-1 h-[14rem] bg-[#474747] text-white flex items-center justify-center rounded-lg shadow-lg"
+          className="flex-1 h-[14rem] bg-[#303346] text-white flex items-center justify-center rounded-lg shadow-lg"
         >
           <p className="text-xl font-bold">Pop-Out Card</p>
         </motion.div>

@@ -18,15 +18,15 @@ export default function Course() {
                 </div>
             </div>
             <div className="flex flex-col gap-2 w-[35%] h-[95vh]">
-                <div className="h-[87%] rounded-lg bg-[#474747] p-4 text-white">
+                <div className="h-[87%] rounded-lg bg-[#20232D] p-4 text-white">
                     hello
                 </div>
-                <div className="w-full h-1 rounded-full bg-[#474747] overflow-hidden relative bg-gradient-to-r from-purple-500 via-blue-500 to-green-500 animate-gradient"></div>
+                <div className="w-full h-1 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-green-500 animate-gradient bg-[length:200%_200%]"></div>
                 <div className="flex gap-2 h-[7%]">
-                    <input className="w-full rounded-lg bg-[#474747] p-4 text-white" 
+                    <input className="w-full rounded-lg bg-[#20232D] p-4 text-white" 
                         placeholder="Ask me"
                     />
-                    <div className="bg-[#474747] w-12 h-12 text-white flex items-center justify-center rounded-lg"> <BiSend size={22} color="white" opacity={0.8}/> </div>
+                    <div className="bg-[#20232D] w-12 h-full text-white flex items-center justify-center rounded-lg"> <BiSend size={22} color="white" opacity={0.8}/> </div>
                 </div>
             </div>
         </div>
