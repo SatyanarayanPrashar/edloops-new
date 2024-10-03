@@ -34,8 +34,11 @@ export default function Home() {
   );
 
   return (
-    <div className="bg-[#232736] flex flex-col items-cente text-white mx-[10rem]">
-      <div className="-z-1 absolute inset-x-0 ins -top-0 h-[80%] w-full bg-transparent bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] opacity-10 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+    <div className="bg-[#232736 flex flex-col items-cente text-white mx-[10rem]">
+      <div className="-z-[2] absolute w-full -mx-[10rem] overflow-hidden">
+        <img className='w-full' src="https://cdn.prod.website-files.com/66cc2bd703ccf308a49a6188/66e9ebfcf14a0bce6e73d5bc_hero-bg-dark.avif" alt="" />
+      </div>
+      <div className="-z-5 absolute inset-x-0  -top-0 h-[80%] w-full bg-transparent bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] opacity-10 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
       <div className=" mt-[7rem] text-center font-bold flex flex-col items-center">
         <h1 className='text-[7rem]'>Learn with AI</h1>
         <AnimatePresence mode="popLayout">
@@ -63,7 +66,7 @@ export default function Home() {
             scale,
             transformPerspective: '1000px',
           }}
-          className="shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] rounded-lg overflow-hidden"
+          className="shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] rounded-lg overflow-hidden w-[90%]"
         >
           <img
             src="hero-img.png"
