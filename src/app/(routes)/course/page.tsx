@@ -1,33 +1,73 @@
+"use client"
+
 import { BiSend } from "react-icons/bi";
 import NextButton from "./[components]/next-button";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import Chatbox from "./[components]/chatbox";
+import CurriculumList from "./[components]/CurriculumList";
 
 export default function Course() {
+    const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+
     return (
-        <div className="flex px-7 pt-7 gap-7 w-[100%]">
+        <div className="flex px-7 pt-7 gap-7 w-[100%] h-full">
             <div className="flex flex-col gap-2 w-[65%]">
+                <div className="text-white text-[1.7em] py-1"> Tune Jo Na Kaha Song </div>
                 <iframe
-                className="h-[70%] w-[100%] rounded-lg"
-                src="https://www.youtube.com/embed/mx0njuUNvT8?si=nSBsv3Jfi4wXwPWN"
-                title="YouTube video player"
-                allow="accelerometer; autoplay;clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+                    className="h-[70%] w-[100%] rounded-lg"
+                    src="https://www.youtube.com/embed/mx0njuUNvT8?si=nSBsv3Jfi4wXwPWN"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay;clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
                 </iframe>
-                <div className="text-white text-[1.5rem]"> Tune Jo Na Kaha Song </div>
                 <div className="flex gap-4 w-full">
                     <NextButton label="Previous" />
-                    <NextButton label="Next"/>
+                    <NextButton label="Next" />
                 </div>
             </div>
-            <div className="flex flex-col gap-2 w-[35%] h-[95vh]">
-                <div className="h-[87%] rounded-lg bg-[#20232D] p-4 text-white">
-                    hello
+            <div className="w-[35%] h-[95vh] flex flex-col gap-4">
+                <div className="h-10 flex border-lg relative">
+                    <button
+                        className="flex-1 p-4 items-center justify-center flex relative"
+                        onClick={() => setIsChatOpen(true)}
+                    >
+                        Ai tutor
+                    </button>
+                    <button
+                        className="flex-1 p-4 items-center justify-center flex relative"
+                        onClick={() => setIsChatOpen(false)}
+                    >
+                        Curriculum
+                    </button>
+                    <div
+                        className="absolute bottom-0 h-[4px] bg-white transition-transform duration-300 ease-in-out"
+                        style={{
+                            width: '50%',
+                            transform: isChatOpen ? 'translateX(0%)' : 'translateX(100%)',
+                        }}
+                    ></div>
                 </div>
-                <div className="w-full h-1 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-green-500 animate-gradient bg-[length:200%_200%]"></div>
-                <div className="flex gap-2 h-[7%]">
-                    <input className="w-full rounded-lg bg-[#20232D] p-4 text-white" 
-                        placeholder="Ask me"
-                    />
-                    <div className="bg-[#20232D] w-12 h-full text-white flex items-center justify-center rounded-lg"> <BiSend size={22} color="white" opacity={0.8}/> </div>
+
+                {/* Content transition */}
+                <div className="relative h-[95%] overflow-x-hidden">
+                    <div
+                        className="absolute w-full h-full transition-transform duration-300 ease-in-out"
+                        style={{
+                            transform: isChatOpen ? 'translateX(0%)' : 'translateX(-100%)'
+                        }}
+                    >
+                        {isChatOpen && <Chatbox />}
+                    </div>
+                    <div
+                        className="absolute w-full transition-transform duration-300 ease-in-out"
+                        style={{
+                            transform: isChatOpen ? 'translateX(100%)' : 'translateX(0%)'
+                        }}
+                    >
+                        {!isChatOpen && <CurriculumList />}
+                    </div>
                 </div>
+
             </div>
         </div>
     );

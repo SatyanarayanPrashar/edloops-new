@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import Link from 'next/link';
 
 export default function Home() {
   const [currentWord, setCurrentWord] = useState(0);
@@ -38,6 +39,7 @@ export default function Home() {
       <div className="-z-[2] absolute w-full -mx-[10rem] overflow-hidden">
         <img className='w-full' src="https://cdn.prod.website-files.com/66cc2bd703ccf308a49a6188/66e9ebfcf14a0bce6e73d5bc_hero-bg-dark.avif" alt="" />
       </div>
+      <div className="-z-[2] bg-[#232736] h-full mt-[100vh] absolute w-full -mx-[10rem] shadow-[0px_0px_100px_200px_#232736]"></div>
       <div className="-z-5 absolute inset-x-0  -top-0 h-[80%] w-full bg-transparent bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] opacity-10 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
       <div className=" mt-[7rem] text-center font-bold flex flex-col items-center">
         <h1 className='text-[7rem]'>Learn with AI</h1>
@@ -56,7 +58,7 @@ export default function Home() {
             {words[currentWord]}
           </motion.div>
         </AnimatePresence>
-        <div className='bg-blue-400 flex items-center justify-center px-4 py-2 rounded-3xl w-[10rem]'>Comming Soon</div>
+        <Link href="/dashboard" className='z-[9999] bg-blue-40 flex items-center justify-center px-4 py-2 rounded-3xl w-[10rem]'>Coming Soon</Link>
       </div>
 
       <div className="flex items-center justify-center mt-6 mb-[10rem]">
