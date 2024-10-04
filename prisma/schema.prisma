@@ -8,8 +8,30 @@ datasource db {
 }
 
 model Resource {
-  id String @id @unique
-  title String
-  description String
+  id        String @id @unique
   transcript String
+}
+
+model Content {
+  id          String @id @unique
+  title       String
+  description String
+  start       String
+  end         String
+}
+
+model Chapter {
+  id          String @id
+  title       String
+  description String
+  resources   Resource[]
+}
+
+model Course {
+  id          String @id
+  title       String
+  description String
+  image       String
+  chapters    Chapter[]
+  students    String[]
 }
