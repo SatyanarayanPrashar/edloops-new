@@ -7,31 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Resource {
-  id        String @id @unique
-  transcript String
+model Courses {
+  id              Int       @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  published       Boolean   @default(false)
+  title           String    @db.VarChar(255)
+  description     String
+  image           String
+  chapters        Chapters[]
+}
+
+model Chapters {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
+  description String
+  course      Courses   @relation(fields: [courseId], references: [id])
+  courseId    Int
+  contents    Content[]
 }
 
 model Content {
-  id          String @id @unique
-  title       String
+  id          Int       @id @default(autoincrement())
+  url         String
+  title       String    @db.VarChar(255)
   description String
-  start       String
-  end         String
-}
-
-model Chapter {
-  id          String @id
-  title       String
-  description String
-  resources   Resource[]
-}
-
-model Course {
-  id          String @id
-  title       String
-  description String
-  image       String
-  chapters    Chapter[]
-  students    String[]
+  start       Int?
+  end         Int?
+  chapter     Chapters  @relation(fields: [chapterId], references: [id])
+  chapterId   Int
 }

@@ -5,13 +5,14 @@ import { useState } from "react";
 import { FaFileAlt } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import Loader from "./loading";
-import type { Resource } from "@/types/resource"; // Adjust the import as needed
+import type { Content } from "@/types/resource";
 
 interface ResourceFormProps {
-  onSubmit: (resource: Resource) => void; // Define the prop type for onSubmit
+  onSubmit: (content: Content) => void;
+  chapterId: number; // New prop for chapterId
 }
 
-export default function ResourceForm({ onSubmit }: ResourceFormProps) {
+export default function ResourceForm({ onSubmit, chapterId }: ResourceFormProps) {
   const [isLoading, setLoading] = useState(false);
   const [v_URL, setVurl] = useState("");
   const [title, setTitle] = useState("");
@@ -62,32 +63,25 @@ export default function ResourceForm({ onSubmit }: ResourceFormProps) {
 
   const handleSubmit = async () => {
     setLoading(true);
+    
     if (!videoId || !title || !description || !v_URL) {
       alert("Please fill in all fields and provide a valid YouTube URL.");
       setLoading(false);
       return;
     }
-  
+
     try {
-      const transcript = selectedFile ? await handleFileUpload() : "NA";
-  
-      const newResource: Resource = {
-        id: videoId, // Use videoId as the resource ID
-        title,
-        description,
-        transcript,
+      const newContent: Content = {
+        url: v_URL,
+        title: title,
+        description: description,
+        start: -1,
+        end: -1,
+        id: 0,
+        chapterId: chapterId // Assign the passed chapterId to the content
       };
 
-      // Call the onSubmit prop with the new resource
-      onSubmit(newResource);
-
-      // Reset form fields if needed
-      setTitle("");
-      setDescription("");
-      setVurl("");
-      setSelectedFile(null);
-      setFileSelected(false);
-    //   onClose(); // Call onClose after submission to close the form
+      onSubmit(newContent); // Submit content with chapterId
     } catch (error) {
       console.error("Error creating resource:", error);
     } finally {
@@ -128,69 +122,27 @@ export default function ResourceForm({ onSubmit }: ResourceFormProps) {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             />
           </div>
-          <div className="w-full">
-            <p>Upload the Transcript of the video</p>
-            <div className="h-[7rem] w-full border-dotted border border-black p-4 flex justify-center items-center rounded-lg">
-              {!fileSelected ? (
-                <label
-                  htmlFor="fileUpload"
-                  className="cursor-pointer flex flex-col justify-center items-center"
-                >
-                  <FaFileAlt size="35px" />
-                  <p className="text-center text-[#9e9ea1] text-[12px]">
-                    click here to select file
-                  </p>
-                </label>
-              ) : (
-                <div className="flex justify-center items-center">
-                  <div className="flex flex-col mr-5 items-end justify-center">
-                    <p className="text-[#9e9ea1] text-[14px]">
-                      Selected file: {selectedFile?.name}
-                    </p>
-                    <a
-                      className="text-[14px] underline hover:text-[blue] cursor-pointer"
-                      onClick={handleChooseAnotherFile}
-                    >
-                      Choose another file
-                    </a>
-                  </div>
-                  <div className="flex">
-                    <button
-                      className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
-                      onClick={handleFileUpload}
-                    >
-                      Upload
-                    </button>
-                  </div>
-                </div>
-              )}
-              <input
-                type="file"
-                id="fileUpload"
-                className="hidden"
-                accept=".doc,.docx,.pdf,.txt"
-                onChange={handleFileChange}
-              />
-            </div>
-          </div>
+          {/* Title input */}
           <div>
             <p>Title</p>
             <input
               className="w-full rounded-lg bg-[#34394a] p-4 text-white"
               placeholder="Title"
               value={title}
-              onChange={(e) => { setTitle(e.target.value); }}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
+          {/* Description input */}
           <div>
             <p>Description</p>
             <textarea
               className="w-full rounded-lg bg-[#34394a] p-4 text-white h-[7rem]"
               placeholder="Comment"
               value={description}
-              onChange={(e) => { setDescription(e.target.value); }}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
+          {/* Submit button */}
           <div
             className="flex h-10 w-[7rem] justify-center items-center border-[1px] border-[#474747] rounded-lg hover:shadow-[4px_4px_0px_0px_#8a8a8a] hover:cursor-pointer bg-blue-500 hover:bg-blue-700 transition-shadow duration-470 group text-gray-200 mb-2"
             onClick={handleSubmit}
