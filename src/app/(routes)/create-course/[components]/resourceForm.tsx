@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { FaFileAlt } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import Loader from "./loading";
 import type { Content } from "@/types/resource";
