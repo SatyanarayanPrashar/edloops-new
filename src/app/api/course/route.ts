@@ -9,12 +9,10 @@ export async function POST(req: Request) {
     const body: Course = await req.json();
     const { id, title, description, image, chapters } = body;
 
-    // Validate the received data
     if (!title || !description || !image || !chapters || chapters.length === 0) {
       return NextResponse.json({ error: 'Missing required course fields' }, { status: 400 });
     }
 
-    // Ensure each chapter has at least one content
     const invalidChapter = chapters.some((chapter: Chapter) => chapter.contents.length === 0);
     if (invalidChapter) {
       return NextResponse.json({ error: 'Each chapter must have at least one content' }, { status: 400 });
@@ -22,6 +20,57 @@ export async function POST(req: Request) {
 
     // If `id` is provided, update the existing course
     if (id) {
+      const existingCourse = await prisma.courses.findUnique({
+        where: { id },
+        include: {
+          chapters: {
+            include: {
+              contents: true,
+            },
+          },
+        },
+      });
+
+      if (!existingCourse) {
+        return NextResponse.json({ error: 'Course not found' }, { status: 404 });
+      }
+
+      // Find chapters to delete (that are in the database but not in the update request)
+      const chaptersToDelete = existingCourse.chapters.filter(
+        (existingChapter) => !chapters.some((chapter) => chapter.id === existingChapter.id)
+      );
+
+      // Find contents to delete within updated chapters
+      const contentsToDelete = chapters.flatMap((chapter) => {
+        const existingChapter = existingCourse.chapters.find((ch) => ch.id === chapter.id);
+        if (!existingChapter) return [];
+        return existingChapter.contents.filter(
+          (existingContent) => !chapter.contents.some((content) => content.id === existingContent.id)
+        );
+      });
+
+      // Delete chapters and contents
+      await prisma.$transaction(async (prisma) => {
+        // Delete contents first within the filtered chapters
+        await prisma.content.deleteMany({
+          where: {
+            id: {
+              in: contentsToDelete.map((content) => content.id),
+            },
+          },
+        });
+      
+        // Then delete the chapters
+        await prisma.chapters.deleteMany({
+          where: {
+            id: {
+              in: chaptersToDelete.map((chapter) => chapter.id),
+            },
+          },
+        });
+      });      
+
+      // Now update or create chapters and contents
       const updatedCourse = await prisma.courses.update({
         where: { id },
         data: {
@@ -29,9 +78,8 @@ export async function POST(req: Request) {
           description,
           image,
           chapters: {
-            // Update or create chapters
             upsert: chapters.map((chapter: Chapter) => ({
-              where: { id: chapter.id ? chapter.id : 0 },  // If `chapter.id` exists, update it
+              where: { id: chapter.id || 0 },
               create: {
                 title: chapter.title,
                 description: chapter.description,
@@ -49,7 +97,6 @@ export async function POST(req: Request) {
                 title: chapter.title,
                 description: chapter.description,
                 contents: {
-                  // Update or create contents within the chapter
                   upsert: chapter.contents.map((content: Content) => ({
                     where: { id: content.id || 0 },
                     create: {
