@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { IoIosArrowBack, IoMdPerson, IoMdSettings } from 'react-icons/io';
 import { MdDashboard } from 'react-icons/md';
-import { PiPerson } from 'react-icons/pi';
 import { RiMoneyDollarCircleFill } from 'react-icons/ri';
 
 interface SidebarWrapperProps {
@@ -41,7 +40,7 @@ export const SidebarWrapper = ({ children }: SidebarWrapperProps) => {
       {/* Main Content */}
       <div className="w-full bg-[#303346]">
         <div className='flex gap-4 bg-red-40 items-centers justify-end pr-5 py-4'>
-          <button > Login </button>
+          <Link href={"/auth/login"}> Login </Link>
           <div className="rounded-full p-3 bg-[#20232D]"> <IoMdPerson /> </div>
         </div>
         {children}

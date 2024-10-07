@@ -1,5 +1,16 @@
 import type { Metadata } from "next";
-import '../globals.css'
+import './globals.css'
+
+export const metadata: Metadata = {
+  title: {
+    template: "Edloops",
+    default: "Edloops",
+  },
+  description: "Course from students to students",
+  icons: {
+    icon: "/logo-dark.png",
+  },
+};
 
 export default function RootLayout({
   children,

@@ -15,7 +15,7 @@ const Page = async () => {
       <div className="flex-1">
         <Testimonial />
       </div>
-      <div className="w-[58%] flex flex-col items-center justify-center bg-slate-300">
+      <div className="w-[58%] flex flex-col items-center justify-center bg-[#303346]">
         <FormWrapper>
           <SigninForm />
         </FormWrapper>

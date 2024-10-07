@@ -14,7 +14,7 @@ export const SignupForm = () => {
 
   return (
     <div className="flex flex-col items-center justify-center text-center text-[#20232D]">
-      <p className="mb-5">Create your Edloops account</p>
+      <p className="my-5">Create your Edloops account</p>
       {showLogin && (
         <>
           <input

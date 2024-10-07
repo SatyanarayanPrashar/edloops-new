@@ -3,7 +3,7 @@ import { CheckmarkIcon } from "react-hot-toast";
 
 export const Testimonial = () => {
   return (
-    <div className="flex flex-col items-center justify-center bg-slate-600 min-h-full text-white">
+    <div className="flex flex-col items-center justify-center bg-[#20232D] min-h-full text-white">
       <div className="3xl:w-2/3 mb-10 space-y-8 px-12 xl:px-20">
         <div>
           <h2 className="text-3xl font-bold">

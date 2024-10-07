@@ -14,7 +14,7 @@ export const SigninForm = () => {
 
   return (
     <div className="items-center justify-center text-center text-[#20232D]">
-      <p className="mb-5">Login to your account</p>
+      <p className="my-5">Login to your account</p>
       {showLogin && (
         <>
           <input
