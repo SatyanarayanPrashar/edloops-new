@@ -1,17 +1,21 @@
 export interface User {
     id: number;
-    createdAt: Date;
-    email: string;
     name: string;
-    role: Role;
-    courses: Course[];
-    enrolledCourses: Course[];
+    email: string;
+    password: string;
+    createdCourses: Course[];
+    enrolledCourses: Enrollment[];
+    createdAt: Date;
+    updatedAt: Date;
 }
 
-export enum Role {
-    USER,
-    CREATOR,
-    ADMIN
+export interface Enrollment {
+    id: number;
+    userId: number;
+    courseId: number;
+    user: User;
+    course: Course;
+    enrolledAt: Date;
 }
 
 export interface Course {
@@ -22,9 +26,11 @@ export interface Course {
     title: string;
     description: string;
     image: string;
-    // creator: User;
-    // creatorId: number;
     chapters: Chapter[];
+
+    creator?: User;
+    creatorId?: number;
+    students?: Enrollment[];
 }
 
 export interface Chapter {

@@ -3,32 +3,30 @@
 import Link from 'next/link';
 import { CgAdd } from "react-icons/cg";
 import { useEffect, useState } from 'react';
-import { Resource } from '@/types/resource';
 
 
 export default function Course() {
-  const [resources, setResources] = useState<Resource[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch resources from the API
   useEffect(() => {
-    const fetchResources = async () => {
-      try {
-        const response = await fetch('/api/resources');
-        if (!response.ok) {
-          throw new Error('Failed to fetch resources');
-        }
-        const data = await response.json();
-        setResources(data);
-      } catch (error) {
-        setError(error instanceof Error ? error.message : 'Unknown error');
-      } finally {
-        setLoading(false);
-      }
-    };
+    // const fetchResources = async () => {
+    //   try {
+    //     const response = await fetch('/api/resources');
+    //     if (!response.ok) {
+    //       throw new Error('Failed to fetch resources');
+    //     }
+    //     const data = await response.json();
+    //     setResources(data);
+    //   } catch (error) {
+    //     setError(error instanceof Error ? error.message : 'Unknown error');
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
 
-    fetchResources();
+    // fetchResources();
   }, []);
 
   if (loading) {
@@ -40,7 +38,7 @@ export default function Course() {
   }
 
   return (
-    <div className="flex flex-col px-7 pt-7 gap-7 w-[100%] text-[#eceef8]">
+    <div className="flex flex-col px-7 gap-7 w-[100%] text-[#eceef8]">
       <Link href={'/create-course'} className="flex flex-col gap-4">
         <h1 className='text-[1.5rem]'>Your Courses</h1>
         <div className="h-[7rem] w-[12rem] flex flex-col justify-center items-center border-dashed border-[#eceef8] border-[1px] rounded-lg">
@@ -56,7 +54,7 @@ export default function Course() {
       </Link>
 
       <h1 className='text-[1.5rem]'>Available Resources</h1>
-      <div className="flex flex-col gap-4">
+      {/* <div className="flex flex-col gap-4">
         {resources.map((resource) => (
           <div key={resource.id} className="border rounded-lg p-4">
             <h2 className='text-[1.2rem]'>{resource.title}</h2>
@@ -64,7 +62,7 @@ export default function Course() {
             <p className='text-sm text-gray-500'>{resource.transcript}</p>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

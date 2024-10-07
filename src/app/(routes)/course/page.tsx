@@ -11,7 +11,7 @@ export default function Course() {
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
 
     return (
-        <div className="flex px-7 pt-7 gap-7 w-[100%] h-full">
+        <div className="flex px-7 gap-7 w-[100%]">
             <div className="flex flex-col gap-2 w-[65%]">
                 <div className="text-white text-[1.7em] py-1"> Tune Jo Na Kaha Song </div>
                 <iframe
@@ -25,7 +25,7 @@ export default function Course() {
                     <NextButton label="Next" />
                 </div>
             </div>
-            <div className="w-[35%] h-[95vh] flex flex-col gap-4">
+            <div className="w-[35%] h-[90vh] flex flex-col gap-4">
                 <div className="h-10 flex border-lg relative">
                     <button
                         className="flex-1 p-4 items-center justify-center flex relative"

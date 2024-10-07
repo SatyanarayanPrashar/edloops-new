@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
-import Modal from "./[components]/model";
-import { type Course, type Content, type Chapter, Role } from "@/types/resource";
+import Modal from "../../components/model";
+import { type Course, type Content, type Chapter, type Enrollment } from "@/types/resource";
 import ResourceForm from "./[components]/resourceForm";
 import ChapterContainer from "./[components]/chapters";
 import { toast } from "react-toastify";
