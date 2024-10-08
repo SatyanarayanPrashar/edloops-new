@@ -4,16 +4,16 @@ import React from "react";
 
 interface ButtonProps {
   label: string;
-  classname: string;
+  classname?: string;
   href?: string;
   onclick?: () => void; // Ensure this is defined as a function
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({ label, classname, href, onclick, children }) => {
   if (href) {
     return (
-      <Link className={cn("px-4 bg-[#20232D] h-10 justify-center items-center flex", classname)} href={href}>
+      <Link className={cn("px-4 bg-[#20232D] h-10 justify-center items-center flex rounded-lg", classname)} href={href}>
         {label}
       </Link>
     );

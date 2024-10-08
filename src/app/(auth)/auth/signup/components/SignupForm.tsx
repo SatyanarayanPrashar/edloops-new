@@ -36,7 +36,7 @@ export const SignupForm = () => {
         }
       })
       if(res.ok){
-        router.push('/dashboard');
+        router.push('/auth/signin');
       }
     } catch(error){
       console.log(error)

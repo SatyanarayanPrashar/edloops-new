@@ -4,6 +4,7 @@ import { MdDashboard } from 'react-icons/md';
 import { RiMoneyDollarCircleFill } from 'react-icons/ri';
 import { getServerSession } from 'next-auth';
 import { LoginButton, LogoutButton } from './authFunction';
+import Button from './button';
 
 interface SidebarWrapperProps {
   children: React.ReactNode;
@@ -54,8 +55,7 @@ export const SidebarWrapper = ({ children, session }: SidebarWrapperProps) => {
               </div>
             </div>
           ) : (
-            // <Link href={"/auth/signup"}> Login </Link>
-            <LoginButton/>
+            <Button label={'Log in'} href='/auth/login'/>
           )}
         </div>
         {children}
