@@ -17,37 +17,38 @@ export const SignupForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Basic validation
+
     if (!email || !fullname || !password) {
       setError('Please fill in all fields');
       return;
     }
 
     try {
-      const response = await fetch('/api/auth/signup', {
+      const res = await fetch('/api/auth/signup', {
         method: 'POST',
+        body: JSON.stringify({
+          fullname,
+          email,
+          password,
+        }),
         headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, fullname, password }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.error || 'Something went wrong');
-        return;
+          'Content-Type': 'application/json'
+        }
+      })
+      if(res.ok){
+        router.push('/dashboard');
       }
-
-      setSuccess('User registered successfully! You can now log in.');
-
-    } catch (error) {
-      setError('Something went wrong, please try again.');
+    } catch(error){
+      console.log(error)
     }
+    
   };
 
   return (
-    <form className="flex flex-col items-center justify-center text-center text-[#20232D]">
+    <form
+    onSubmit={handleSubmit}
+    className="flex flex-col items-center justify-center text-center text-[#20232D]"
+    >
       <p className="my-5">Create your Edloops account</p>
         <input
           id="email"
@@ -63,7 +64,7 @@ export const SignupForm = () => {
           type="text"
           value={fullname}
           onChange={(e) => setFullname(e.target.value)}
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          className="mt-3 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           placeholder="Enter your full name"
           required
         />
@@ -72,15 +73,15 @@ export const SignupForm = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          className="mt-3 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           required
           placeholder="******"
         />
       <button
         type="submit"
-        className="border-[1px] rounded-lg my-5    bg-cyan-600 hover:bg-cyan-500 text-white w-full px-4 h-10 justify-center items-center flex"
+        className="border-[1px] rounded-lg mt-3 bg-cyan-600 hover:bg-cyan-500 text-white w-full px-4 h-10 justify-center items-center flex"
       >
-        Login
+        Sign up
       </button>
 
       <p className="text-[13px] text-slate-500 font-thin mt-2">By signing up, you agree to our</p>

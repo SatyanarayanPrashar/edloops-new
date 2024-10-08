@@ -49,7 +49,7 @@ export const SidebarWrapper = ({ children, session }: SidebarWrapperProps) => {
               <div className="rounded-full bg-[#20232D]">
                 {session.user.image ? 
                   <img src={session.user.image} className="rounded-full bg-[#20232D] h-10" /> :
-                  <IoMdPerson />
+                  <IoMdPerson className='m-3'/>
                 }
               </div>
             </div>
