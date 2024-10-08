@@ -1,7 +1,8 @@
 import { FormWrapper } from "@/app/(auth)/auth/components/FormWrapper";
 import { Testimonial } from "@/app/(auth)/auth/components/Testimonial";
-import { SigninForm } from "@/app/(auth)/auth/login/components/SigninForm";
+
 import { Metadata } from "next";
+import { SignInForm } from "./components/SigninForm";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -17,7 +18,7 @@ const Page = async () => {
       </div>
       <div className="w-[58%] flex flex-col items-center justify-center bg-[#303346]">
         <FormWrapper>
-          <SigninForm />
+          <SignInForm />
         </FormWrapper>
       </div>
     </div>

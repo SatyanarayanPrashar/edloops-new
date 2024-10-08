@@ -1,5 +1,22 @@
-import type { Metadata } from "next";
-import './globals.css'
+
+import './globals.css';
+import { ReactNode } from 'react';
+import { Metadata } from 'next';
+import { SessionWrapper } from './components/sessionwarpper';
+
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <html lang="en">
+        <body>
+          <SessionWrapper >{children}</SessionWrapper> 
+        </body>
+    </html>
+  );
+}
 
 export const metadata: Metadata = {
   title: {
@@ -11,19 +28,3 @@ export const metadata: Metadata = {
     icon: "/logo-dark.png",
   },
 };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body
-        className="bg-[#232736]"
-      >
-        {children}
-      </body>
-    </html>
-  );
-}
