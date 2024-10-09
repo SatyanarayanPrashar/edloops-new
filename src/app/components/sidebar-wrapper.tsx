@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import { IoIosArrowBack, IoMdPerson, IoMdSettings } from 'react-icons/io';
+import { IoMdPerson, IoMdSettings } from 'react-icons/io';
 import { MdDashboard } from 'react-icons/md';
 import { RiMoneyDollarCircleFill } from 'react-icons/ri';
-import { getServerSession } from 'next-auth';
-import { LoginButton, LogoutButton } from './authFunction';
+import { LogoutButton } from './authFunction';
 import Button from './button';
 
 interface SidebarWrapperProps {
@@ -14,7 +13,6 @@ interface SidebarWrapperProps {
 export const SidebarWrapper = ({ children, session }: SidebarWrapperProps) => {
   return (
     <div className="flex min-h-[100vh] bg-[#20232D]">
-      {/* Sidebar */}
       <div className="min-h-full gap-7 bg-[#20232D] text-white transition-all duration-300 ease-in-out py-10 px-2 flex flex-col items-center group w-[4rem] hover:w-[12rem]">
         <Link href={'/dashboard'} className="flex items-center w-full overflow-hidden hover:cursor-pointer hover:pl-2">
           <MdDashboard size={25} className="min-w-[40px]" />

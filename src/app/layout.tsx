@@ -4,6 +4,17 @@ import { ReactNode } from 'react';
 import { Metadata } from 'next';
 import { SessionWrapper } from './components/sessionwarpper';
 
+export const metadata: Metadata = {
+  title: {
+    template: "Edloops",
+    default: "Edloops",
+  },
+  description: "Course from students to students",
+  icons: {
+    icon: "/logo-dark.png",
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -17,14 +28,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-export const metadata: Metadata = {
-  title: {
-    template: "Edloops",
-    default: "Edloops",
-  },
-  description: "Course from students to students",
-  icons: {
-    icon: "/logo-dark.png",
-  },
-};

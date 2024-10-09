@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from "@prisma/client";
-import { Course, Chapter, Content } from '@/types/resource'; // Adjust import path based on your file structure
+import { Course, Chapter, Content } from '@/types/resource';
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
     const body: Course = await req.json();
-    const { id, title, description, image, chapters } = body;
+    const { id, title, description, image, chapters, creatorId } = body;
 
     if (!title || !description || !image || !chapters || chapters.length === 0) {
       return NextResponse.json({ error: 'Missing required course fields' }, { status: 400 });
@@ -16,6 +16,10 @@ export async function POST(req: Request) {
     const invalidChapter = chapters.some((chapter: Chapter) => chapter.contents.length === 0);
     if (invalidChapter) {
       return NextResponse.json({ error: 'Each chapter must have at least one content' }, { status: 400 });
+    }
+
+    if (!creatorId) {
+      return NextResponse.json({ error: 'Missing creatorId' }, { status: 400 });
     }
 
     // If `id` is provided, update the existing course
@@ -152,6 +156,7 @@ export async function POST(req: Request) {
             },
           })),
         },
+        creatorId
       },
       include: {
         chapters: {

@@ -7,8 +7,11 @@ import { type Course, type Content, type Chapter, type Enrollment } from "@/type
 import ResourceForm from "./[components]/resourceForm";
 import ChapterContainer from "./[components]/chapters";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 export default function Course() {
+  const { data: session } = useSession();
+
   const [course, setCourse] = useState<Course>({
     id: 0,
     title: "",
@@ -24,6 +27,7 @@ export default function Course() {
     published: false,
     createdAt: new Date(),
     updatedAt: new Date(),
+    creatorId: parseInt(session?.user.id || "")
   });
 
   const [iscontentFormOpen, setIscontentFormOpen] = useState(false);
@@ -86,6 +90,8 @@ export default function Course() {
             end: content.end,
           }))
         })),
+        creatorId: parseInt(session?.user.id || ""),
+        user: session?.user
       });
 
       console.log("Request body:", body);
@@ -161,6 +167,8 @@ export default function Course() {
           onChange={(e) => setCourse({ ...course, description: e.target.value })}
         />
       </div>
+
+      <p>{session?.user.id}</p>
 
       <div className="flex flex-col items-center w-1/2">
         {course.chapters && course.chapters.map((chapter, index) => (
