@@ -3,10 +3,17 @@ export interface User {
     name: string;
     email: string;
     password: string;
+    image?: string;
     createdCourses: Course[];
     enrolledCourses: Enrollment[];
     createdAt: Date;
     updatedAt: Date;
+}
+export interface Creator {
+    id: number;
+    name: string;
+    email: string;
+    image?: string;
 }
 
 export interface Enrollment {
@@ -28,7 +35,7 @@ export interface Course {
     image: string;
     chapters: Chapter[];
 
-    creator?: User;
+    creator?: Creator;
     creatorId?: number;
     students?: Enrollment[];
 }

@@ -1,11 +1,11 @@
 "use client"
 
 import { BiSend } from "react-icons/bi";
-import NextButton from "./[components]/next-button";
+import NextButton from "./_components/next-button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import Chatbox from "./[components]/chatbox";
-import CurriculumList from "./[components]/CurriculumList";
+import Chatbox from "./_components/chatbox";
+import ChapterList from "./_components/ChapterList";
 
 export default function Course() {
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
@@ -37,7 +37,7 @@ export default function Course() {
                         className="flex-1 p-4 items-center justify-center flex relative"
                         onClick={() => setIsChatOpen(false)}
                     >
-                        Curriculum
+                        Chapter
                     </button>
                     <div
                         className="absolute bottom-0 h-[4px] bg-white transition-transform duration-300 ease-in-out"
@@ -64,7 +64,7 @@ export default function Course() {
                             transform: isChatOpen ? 'translateX(100%)' : 'translateX(0%)'
                         }}
                     >
-                        {!isChatOpen && <CurriculumList />}
+                        {/* {!isChatOpen && <ChapterList />} */}
                     </div>
                 </div>
 

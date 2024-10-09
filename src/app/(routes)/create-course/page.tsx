@@ -195,7 +195,7 @@ export default function Course() {
       </div>
 
       <button
-        className="absolute bottom-10 right-10 rounded-lg p-2 mt-2 bg-slate-500 text-white"
+        className="fixed bottom-10 right-10 rounded-lg p-2 mt-2 bg-slate-500 w-20 text-white"
         onClick={() => { saveCourse(); }}
       >
         {course.id !== 0 ? "Update" : "Save"}
