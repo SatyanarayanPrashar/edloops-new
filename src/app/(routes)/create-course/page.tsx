@@ -167,9 +167,6 @@ export default function Course() {
           onChange={(e) => setCourse({ ...course, description: e.target.value })}
         />
       </div>
-
-      <p>{session?.user.id}</p>
-
       <div className="flex flex-col items-center w-1/2">
         {course.chapters && course.chapters.map((chapter, index) => (
           <div key={chapter.id} className="w-full">

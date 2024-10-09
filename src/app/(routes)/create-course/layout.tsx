@@ -1,8 +1,7 @@
 import { SidebarWrapper } from "@/app/components/sidebar-wrapper";
-import { getServerSession } from 'next-auth';
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import React from "react";
-import { SessionWrapper } from "@/app/components/sessionwarpper";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from 'next-auth';
 
 export default async function Layout({
   children,
@@ -15,9 +14,7 @@ export default async function Layout({
     <html lang="en">
       <body className="">
         <SidebarWrapper session={session}>
-          <SessionWrapper>
             {children}
-          </SessionWrapper>
         </SidebarWrapper>
       </body>
     </html>

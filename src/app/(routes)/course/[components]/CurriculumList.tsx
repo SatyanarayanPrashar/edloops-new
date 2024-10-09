@@ -1,15 +1,17 @@
-// import { BsArrowDown } from "react-icons/bs";
-// import { useState } from "react";
+"use client";
 
-export default function CurriculumList() {
-  // Dummy data
-  const curriculumData = Array.from({ length: 20 }, (_, i) => ({
-    title: `Introduction to Java ${i + 1}`,
-    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate dolorum mollitia nihil maxime maiores adipisci quos autem nulla consequatur quam!`,
-  }));
+interface CurriculumItem {
+  title: string;
+  description: string;
+}
 
+interface CurriculumListProps {
+  curriculumData: CurriculumItem[];
+}
+
+export default function CurriculumList({ curriculumData }: CurriculumListProps) {
   return (
-    <div className="flex flex-col gap-2 w-full h-full overflow-y-auto pr-4 scrollbar-track-black scrollbar-thumb-gray-700 ">
+    <div className="flex flex-col gap-2 w-full h-full overflow-y-auto pr-4 scrollbar-track-black scrollbar-thumb-gray-700">
       {curriculumData.map((item, index) => (
         <div
           key={index}
@@ -20,7 +22,6 @@ export default function CurriculumList() {
               <p>{index + 1}.</p>
               <p>{item.title}</p>
             </div>
-            {/* <BsArrowDown className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" /> */}
           </div>
           <p className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {item.description}
