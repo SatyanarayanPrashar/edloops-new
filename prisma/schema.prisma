@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int       @id @default(autoincrement())
+  name             String
+  email            String    @unique
+  password         String?
+  createdCourses   Courses[]  @relation("CreatedCourses")
+  enrolledCourses  Enrollment[]  // Enrolled courses via the Enrollment join table
+
+  emailVerified   Boolean @default(false)
+  image           String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  verificationToken   VerificationToken[]
+}
+
+model VerificationToken {
+  id              Int       @id @default(autoincrement())
+  token           String    @unique
+  activatedAt     DateTime?
+  user            User @relation(fields: [userId], references: [id])
+  userId          Int
+}
+
+model Enrollment {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  courseId  Int
+  user      User    @relation(fields: [userId], references: [id])
+  course    Courses  @relation(fields: [courseId], references: [id])
+  enrolledAt DateTime @default(now())
+
+  @@unique([userId, courseId]) // Ensure a user cannot enroll in the same course multiple times
+}
+
+model Courses {
+  id              Int       @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  published       Boolean   @default(false)
+  title           String    @db.VarChar(255)
+  description     String
+  image           String
+  chapters        Chapters[]
+
+  creator     User       @relation("CreatedCourses", fields: [creatorId], references: [id])
+  creatorId   Int
+  students    Enrollment[] // Students enrolled via the Enrollment join table
+}
+
+model Chapters {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
+  description String
+  course      Courses   @relation(fields: [courseId], references: [id])
+  courseId    Int
+  contents    Content[]
+}
+
+model Content {
+  id          Int       @id @default(autoincrement())
+  url         String
+  title       String    @db.VarChar(255)
+  description String
+  start       Int?
+  end         Int?
+  chapter     Chapters  @relation(fields: [chapterId], references: [id])
+  chapterId   Int
+}

@@ -1,168 +1,214 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { FaFileAlt } from "react-icons/fa";
-import { RxCross2 } from "react-icons/rx";
-import Loader from "./[components]/loading";
+import { useState, useEffect } from "react";
+import { IoMdAdd, IoMdClose } from "react-icons/io";
+import Modal from "../../components/model";
+import { type Course, type Content, type Chapter, type Enrollment } from "@/types/resource";
+import ResourceForm from "./[components]/resourceForm";
+import ChapterContainer from "./[components]/chapters";
+import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 export default function Course() {
-  const [isLoading, setLoading] = useState(false);
-  const [v_URL, setVurl] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const { data: session } = useSession();
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [fileSelected, setFileSelected] = useState(false);
+  const [course, setCourse] = useState<Course>({
+    id: 0,
+    title: "",
+    description: "",
+    image: "",
+    chapters: [{
+      id: 0,
+      title: "",
+      description: "",
+      contents: [],
+      courseId: 0
+    }],
+    published: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    creatorId: parseInt(session?.user.id || "")
+  });
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
-      setFileSelected(true);
+  const [iscontentFormOpen, setIscontentFormOpen] = useState(false);
+  const [currentChapterIndex, setCurrentChapterIndex] = useState<number | null>(null);
+
+  const addChapter = () => {
+    setCourse(prevCourse => ({
+      ...prevCourse,
+      chapters: [
+        ...prevCourse.chapters,
+        { id: 0, title: "", description: "", contents: [], courseId: course.id }
+      ]
+    }));
+  };
+
+  const opencontentForm = (index: number) => {
+    setCurrentChapterIndex(index);
+    setIscontentFormOpen(true);
+  };
+
+  const closecontentForm = () => {
+    setIscontentFormOpen(false);
+    setCurrentChapterIndex(null);
+  };
+
+  const removeChapter = (index: number) => {
+    const newChapters = course.chapters?.filter((_, i) => i !== index);
+    setCourse({ ...course, chapters: newChapters });
+  };
+
+  // Function to create or update a course
+  const saveCourse = async () => {
+    if (!course.title || !course.description || !course.image) {
+      console.log("Please fill in the course details");
+      return;
     }
-  };
-
-  const handleFileUpload = async () => {
-    if (selectedFile) {
-      try {
-        // const formData = new FormData();
-        // formData.append('file', selectedFile);
-        // const response = await axios.post('/api/upload', formData);
-        // console.log(response.data);
-      } catch (error) {
-        console.error("Error uploading file:", error);
-      }
+  
+    if (course.chapters.length === 0 || course.chapters.some(chapter => chapter.contents.length === 0)) {
+      console.log("Each chapter must have at least one content.");
+      return;
     }
-  };
 
-  const handleChooseAnotherFile = () => {
-    setSelectedFile(null);
-    setFileSelected(false);
-  };
-
-  const extractVideoId = (url: string) => {
     try {
-      const urlObj = new URL(url);
-      const params = new URLSearchParams(urlObj.search);
-      return params.get("v") || "";
+      // Create a simplified course object for submission
+      const body = JSON.stringify({
+        id: course.id !== 0 ? course.id : undefined,
+        title: course.title,
+        description: course.description,
+        image: course.image,
+        chapters: course.chapters.map(chapter => ({
+          id: chapter.id !== 0 ? chapter.id : undefined,
+          title: chapter.title,
+          description: chapter.description,
+          contents: chapter.contents.map(content => ({
+            id: content.id !== 0 ? content.id : undefined,
+            title: content.title,
+            description: content.description,
+            url: content.url,
+            start: content.start,
+            end: content.end,
+          }))
+        })),
+        creatorId: parseInt(session?.user.id || ""),
+        user: session?.user
+      });
+
+      console.log("Request body:", body);
+
+      const response = await fetch("/api/course", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: body,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save course");
+      }
+
+      const data = await response.json();
+      console.log("Course saved successfully:", data);
+
+      // Update the course state with the response (especially for updates)
+      setCourse(data.course);
+      console.log("Courrse Saved");
     } catch (error) {
-      console.error("Invalid URL", error);
-      return "";
+      toast.error("Something went Wrong :(");
+      console.error("Error saving course:", error);
     }
   };
 
-  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVurl(e.target.value);
-  };
+  const handleContentSubmit = (newContent: Content) => {
+    if (currentChapterIndex !== null) {
+      setCourse(prevCourse => {
+        const updatedChapters = [...prevCourse.chapters];
+        const targetChapter = updatedChapters[currentChapterIndex];
 
-  const videoId = extractVideoId(v_URL);
+        const updatedChapter = {
+          ...targetChapter,
+          contents: [...targetChapter.contents, { ...newContent, chapterId: targetChapter.id }]
+        };
+
+        updatedChapters[currentChapterIndex] = updatedChapter;
+        return { ...prevCourse, chapters: updatedChapters };
+      });
+    }
+    closecontentForm();
+  };
 
   return (
-    <>
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <div className="flex flex-col px-[24rem] pt-7 gap-7 w-[100%] text-[#eceef8]">
-        <div className="flex flex-col">
-          <div className="flex gap-2 h-[40px]">
-            <input
-              className="w-full rounded-lg bg-[#20232D] p-4 text-white"
-              placeholder="Paste the YouTube URL"
-              value={v_URL}
-              onChange={handleUrlChange}
-            />
-            <div
-              className="bg-[#20232D] w-12 h-full text-white flex items-center justify-center rounded-lg cursor-pointer"
-              onClick={() => setVurl("")}
-            >
-              <RxCross2 size={22} color="white" opacity={0.8} />
-            </div>
-          </div>
-          {!videoId && v_URL && (
-            <p className="text-red-500 text-[13px]">Please check the URL</p>
-          )}
-          <iframe
-            className={cn(
-              "h-0 w-[100%] rounded-lg mt-4 transition-all duration-200",
-              videoId && "h-[22rem]"
-            )}
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          />
-        </div>
-        <div className="w-full">
-          <p>Upload the Trancript of the video</p>
-          <div className="h-[7rem] w-full border-dotted border border-black p-4 flex justify-center items-center rounded-lg">
-            {!fileSelected ? (
-              <label
-                htmlFor="fileUpload"
-                className="cursor-pointer flex flex-col justify-center items-center"
-              >
-                <FaFileAlt size="35px" />
-                <p className="text-center text-[#9e9ea1] text-[12px]">
-                  click here to select file
-                </p>
-              </label>
-            ) : (
-              <div className="flex justify-center items-center">
-                <div className="flex flex-col mr-5 items-end justify-center">
-                  <p className="text-[#9e9ea1] text-[14px]">
-                    Selected file: {selectedFile?.name}
-                  </p>
-                  <a
-                    className="text-[14px] underline hover:text-[blue] cursor-pointer"
-                    onClick={handleChooseAnotherFile}
-                  >
-                    Choose another file
-                  </a>
-                </div>
-                <div className="flex">
-                  <button
-                    className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
-                    onClick={handleFileUpload}
-                  >
-                    Upload
-                  </button>
-                </div>
-              </div>
-            )}
-            <input
-              type="file"
-              id="fileUpload"
-              className="hidden"
-              accept=".doc,.docx,.pdf,.txt"
-              onChange={handleFileChange}
-            />
-          </div>
-        </div>
-        <div>
-          <p>Title</p>
+    <div className="flex flex-col px-7 pt-7 gap-7 w-full justify-center items-center">
+      <div className="relative w-1/2 border-dashed border-[1px] rounded-lg">
+        <div className="w-full rounded-lg flex items-center justify-center">
           <input
-            className="w-full rounded-lg bg-[#20232D] p-4 text-white"
-            placeholder="Title"
-            value={title}
-            onChange={ (e)=>{setTitle(e.target.value)} }
-            />
-        </div>
-        <div>
-          <p>Description</p>
-          <textarea
-            className="w-full rounded-lg bg-[#20232D] p-4 text-white h-[7rem]"
-            placeholder="Comment"
-            value={description}
-            onChange={ (e)=>{setDescription(e.target.value)} }
+          className="absolute w-1/2 rounded-lg bg-gray-100 text-[18px] p-2 text-black border-[1px]"
+          placeholder="Enter the url for the cover Image"
+          value={course.image}
+          onChange={(e) => setCourse({ ...course, image: e.target.value })}
+          />
+          <img 
+            src={course.image ? course.image : "tempimg.jpg"}
+            alt="" 
+            className="rounded-lg h-[15rem] w-full object-cover" 
           />
         </div>
-        <div
-          className="flex h-10 w-[7rem] justify-center items-center border-[1px] border-[#474747] rounded-lg hover:shadow-[4px_4px_0px_0px_#8a8a8a] hover:cursor-pointer bg-blue-500 hover:bg-blue-700 transition-shadow duration-470 group text-gray-200 mb-20"
-          onClick={() => {
-            setLoading(true);
-          }}
-        >
-          Done
+        <input
+          className="w-[95%] rounded-lg bg-transparent text-[40px] text-white m-4"
+          placeholder="Course Title"
+          value={course.title}
+          onChange={(e) => setCourse({ ...course, title: e.target.value })}
+        />
+        <textarea
+          className="w-[95%] rounded-lg bg-transparent text-white mx-4"
+          placeholder="Course Description"
+          value={course.description}
+          onChange={(e) => setCourse({ ...course, description: e.target.value })}
+        />
+      </div>
+      <div className="flex flex-col items-center w-1/2">
+        {course.chapters && course.chapters.map((chapter, index) => (
+          <div key={chapter.id} className="w-full">
+            <ChapterContainer
+              course={course}
+              chapter={chapter}
+              updateChapter={(updatedChapter) => {
+                const newChapters = [...course.chapters];
+                newChapters[index] = updatedChapter;
+                setCourse({ ...course, chapters: newChapters });
+              }}
+              onAddcontent={() => opencontentForm(index)}
+              onRemoveChapter={() => removeChapter(index)}
+            />
+          </div>
+        ))}
+        <div className="flex flex-col items-center">
+          <div className="h-5 w-[1px] border-dashed border-[1px] border-[#eceef8]" />
+          <div
+            className="border-dashed border-[#eceef8] border-[1px] rounded-full p-2 cursor-pointer"
+            onClick={addChapter}
+          >
+            <IoMdAdd />
+          </div>
         </div>
       </div>
-      )}
-    </>
+
+      <button
+        className="fixed bottom-10 right-10 rounded-lg p-2 mt-2 bg-slate-500 w-20 text-white"
+        onClick={() => { saveCourse(); }}
+      >
+        {course.id !== 0 ? "Update" : "Save"}
+      </button>
+
+      <Modal isOpen={iscontentFormOpen} onClose={closecontentForm}>
+        {currentChapterIndex !== null && (
+          <ResourceForm
+            onSubmit={handleContentSubmit}
+            chapterId={course.chapters[currentChapterIndex].id}
+          />
+        )}
+      </Modal>
+    </div>
   );
 }

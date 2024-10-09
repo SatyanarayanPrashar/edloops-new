@@ -1,17 +1,17 @@
 "use client"
 
 import { BiSend } from "react-icons/bi";
-import NextButton from "./[components]/next-button";
+import NextButton from "./_components/next-button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import Chatbox from "./[components]/chatbox";
-import CurriculumList from "./[components]/CurriculumList";
+import Chatbox from "./_components/chatbox";
+import ChapterList from "./_components/ChapterList";
 
 export default function Course() {
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
 
     return (
-        <div className="flex px-7 pt-7 gap-7 w-[100%] h-full">
+        <div className="flex px-7 gap-7 w-[100%]">
             <div className="flex flex-col gap-2 w-[65%]">
                 <div className="text-white text-[1.7em] py-1"> Tune Jo Na Kaha Song </div>
                 <iframe
@@ -25,7 +25,7 @@ export default function Course() {
                     <NextButton label="Next" />
                 </div>
             </div>
-            <div className="w-[35%] h-[95vh] flex flex-col gap-4">
+            <div className="w-[35%] h-[90vh] flex flex-col gap-4">
                 <div className="h-10 flex border-lg relative">
                     <button
                         className="flex-1 p-4 items-center justify-center flex relative"
@@ -37,7 +37,7 @@ export default function Course() {
                         className="flex-1 p-4 items-center justify-center flex relative"
                         onClick={() => setIsChatOpen(false)}
                     >
-                        Curriculum
+                        Chapter
                     </button>
                     <div
                         className="absolute bottom-0 h-[4px] bg-white transition-transform duration-300 ease-in-out"
@@ -64,7 +64,7 @@ export default function Course() {
                             transform: isChatOpen ? 'translateX(100%)' : 'translateX(0%)'
                         }}
                     >
-                        {!isChatOpen && <CurriculumList />}
+                        {/* {!isChatOpen && <ChapterList />} */}
                     </div>
                 </div>
 
