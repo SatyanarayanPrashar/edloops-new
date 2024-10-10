@@ -1,5 +1,3 @@
-import { BiSend } from "react-icons/bi";
-
 export default function NextButton( {label}: {label: string} ) {
     
     return (

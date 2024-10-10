@@ -1,11 +1,9 @@
 "use client"
 
-import { BiSend } from "react-icons/bi";
 import NextButton from "./_components/next-button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Chatbox from "./_components/chatbox";
-import ChapterList from "./_components/ChapterList";
 
 export default function Course() {
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);

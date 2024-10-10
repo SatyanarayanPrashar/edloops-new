@@ -1,14 +1,17 @@
 "use client"
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+
+import React from 'react';
+import { motion } from "framer-motion";
 import Link from 'next/link';
 import { Vortex } from '../components/vortex';
 import { ContainerScroll } from '../components/container-scroll-animation';
 import { InfiniteMovingCards } from '../components/infinite-moving-cards';
 import { Timeline } from '../components/timeline';
 import { TextHoverEffect } from '../components/text-hover-effect';
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session } = useSession();
 
   return (
     <div className="bg-[#232736] flex flex-col items-cente text-white">
@@ -28,23 +31,29 @@ export default function Home() {
             Master Any Topic 2x Faster
           </h2>
           <p className="text-white text-xl md:text-2xl max-w-xl mt-2 md:mt-6 text-center">
-            With Edloops AI learn faster, better and smarter
+            With Edloops AI Learn the Faster, Better and Smarter Way
           </p>
-          <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
-            <Link href="/auth/signup/" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 transition duration-200 rounded-lg text-white shadow-[0px_2px_0px_0px_#FFFFFF40_inset]">
-              Sign Up
-            </Link>
-            <Link href="/auth/login/" className="px-4 py-2 text-white ">Login</Link>
-          </div>
+          {session ?
+            <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+              <Link href="/dashboard" className="px-4 py-2 text-white border-[1px] rounded-lg hover:bg-slate-50/20">
+                Home
+              </Link>
+            </div>
+            :
+            <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+              <Link href="/auth/signup/" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 transition duration-200 rounded-lg text-white shadow-[0px_2px_0px_0px_#FFFFFF40_inset]">
+                Sign Up
+              </Link>
+              <Link href="/auth/login/" className="px-4 py-2 text-white">Login</Link>
+            </div>
+          }
         </Vortex>
       </div>
-      <div className="flex flex-col overflow-hidde">
+      <div className="flex flex-col">
         <ContainerScroll >
           <img
             src="hero-img.png"
             alt="hero"
-            height={540}
-            width={1400}
             className="mx-auto rounded-lg object-cover h-full object-left-top"
             draggable={false}
           />
@@ -67,7 +76,7 @@ export default function Home() {
       >
         <h1 className='my-6 text-4xl md:text-6xl mx-[4rem] md:mx-[12rem]'>Top 1% learning materials curated and crafted into courses</h1>
       </motion.div>
-      <div className="h-[20rem] rounded-md flex flex-col antialiased bg-transparent items-center justify-center relative overflow-hidden">
+      <div className="h-[20rem] rounded-md flex flex-col antialiased bg-transparent items-center justify-center relative overflow-hidden mt-20">
         <InfiniteMovingCards
           items={testimonials}
           direction="right"
@@ -90,9 +99,9 @@ const data = [
           Filter noise from existing knowledge, and curate them into courses. Edit till you get satisfied.
         </p>
           <img
-            src="https://assets.aceternity.com/pro/hero-sections.png"
+            src="gen-course.png"
             alt="startup template"
-            className="rounded-lg object-cover w-full h-[30rem]"
+            className="rounded-lg object-cover w-full h-[28rem]"
           />
       </div>
     ),
@@ -105,9 +114,9 @@ const data = [
           Not only watch or read content but interact with it, boost your learning senses to understand difficult concepts in faster and better way
         </p>
         <img
-          src="https://assets.aceternity.com/cards.png"
+          src="hero-img.png"
           alt="cards template"
-          className="rounded-lg object-cover w-full h-[30rem]"
+          className="rounded-lg object-cover w-full h-[28rem]"
         />
       </div>
     ),
