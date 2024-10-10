@@ -32,22 +32,28 @@ export const SidebarWrapper = ({ children, session }: SidebarWrapperProps) => {
             Settings
           </span>
         </div>
-        <Link href="/profile" className="flex items-center w-full overflow-hidden hover:cursor-pointer hover:pl-2">
-          {session.user.image ?
-            <img src={session.user.image} className="rounded-full bg-[#20232D] h-10" /> :
-            <IoMdPerson size={25} className="min-w-[40px]" />
-          }
-          <span className="ml-2 opacity-0 group-hover:opacity-100 group-hover:ml-2 transition-all duration-300">
-            {session.user.name}
-          </span>
-        </Link>
-        <div className="flex items-center w-full overflow-hidden hover:cursor-pointer hover:pl-2">
-          {session&& (
-            <div className="flex gap-2 items-center">
-              <LogoutButton/>
+        {session && (
+          <>
+            <Link href="/profile" className="flex items-center w-full overflow-hidden hover:cursor-pointer hover:pl-2">
+                <div>
+                  {session.user.image ?
+                    <img src={session.user.image} className="rounded-full bg-[#20232D] h-10" /> :
+                    <IoMdPerson size={25} className="min-w-[40px]" />
+                  }
+                </div>
+              <span className="ml-2 opacity-0 group-hover:opacity-100 group-hover:ml-2 transition-all duration-300">
+                {session.user.name}
+              </span>
+            </Link>
+            <div className="flex items-center w-full overflow-hidden hover:cursor-pointer hover:pl-2">
+              {session&& (
+                <div className="flex gap-2 items-center">
+                  <LogoutButton/>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
       <div className="w-full bg-[#303346]">
         <div className='flex gap-4 bg-red-40 items-center justify-end pr-5 py-4'>

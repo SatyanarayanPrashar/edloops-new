@@ -139,7 +139,7 @@ export default function Course() {
   };
 
   return (
-    <div className="flex flex-col px-7 pt-7 gap-7 w-full justify-center items-center">
+    <div className="flex flex-col px-7 pt-1 gap-7 w-full justify-center items-center">
       <div className="relative w-1/2 border-dashed border-[1px] rounded-lg">
         <div className="w-full rounded-lg flex items-center justify-center">
           <input
