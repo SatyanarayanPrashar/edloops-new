@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "Edloops",
     default: "Edloops",
   },
-  description: "Course from students to students",
+  description: "Master Any Topic 2x Faster | With Edloops AI Learn the Faster, Better and Smarter Way",
   icons: {
     icon: "/logo-dark.png",
   },
