@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {

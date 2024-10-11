@@ -1,6 +1,6 @@
 import { SidebarWrapper } from "@/app/components/sidebar-wrapper";
 import { Metadata } from "next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from 'next-auth';
 
 export const metadata: Metadata = {

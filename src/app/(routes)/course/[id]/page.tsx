@@ -1,8 +1,8 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { fetchCourseData } from '@/app/api/fetchcourse/route';
 import CourseComponent from '../_components/courseContainer';
+import { fetchCourseData } from '@/lib/fetchcourse';
+import { authOptions } from '@/lib/authOptions';
 
 export async function generateMetadata({ params }: { params: { id: number } }) {
   const courseId = params.id;

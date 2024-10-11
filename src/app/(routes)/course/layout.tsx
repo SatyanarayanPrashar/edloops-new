@@ -1,7 +1,7 @@
 import { SidebarWrapper } from "@/app/components/sidebar-wrapper";
 import { SessionWrapper } from "@/app/components/sessionwarpper";
 import { getServerSession } from 'next-auth';
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 
 export default async function Layout({
   children,
