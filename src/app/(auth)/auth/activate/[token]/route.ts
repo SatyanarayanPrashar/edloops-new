@@ -44,5 +44,5 @@ export async function GET( request: NextRequest, { params }: {params: { token: s
     },
   })
 
-  redirect('/api/auth/signin')
+  redirect('/auth/login')
 }

@@ -7,9 +7,10 @@ import ChapterList from "./ChapterList";
 
 interface CourseComponentProps {
   course: Course;
+  session: any;
 }
 
-export default function CourseComponent({ course }: CourseComponentProps) {
+export default function CourseComponent({ course, session }: CourseComponentProps) {
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [currentContent, setCurrentContent] = useState<[number, number]>([0, 0]);
 
@@ -27,22 +28,31 @@ export default function CourseComponent({ course }: CourseComponentProps) {
   const videoId = extractVideoId(course.chapters[currentContent[0]].contents[currentContent[1]].url);
 
   return (
-    <div className="flex px-7 gap-7 w-[100%]">
-      <div className="flex flex-col gap-2 w-[65%]">
+    <div className="flex lg:px-7 gap-7 w-full flex-col md:flex-col lg:flex-row ">
+      <div className="flex flex-col gap-2 lg:w-[65%] md:w-full">
         {/* Display the Content Title and Video */}
-        <div className="text-[#aea9a9] text-[1.7em] py-1">{course.title} </div>
-        <iframe
-          className="h-[67%] w-[100%] rounded-lg"
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        ></iframe>
+        <div className="text-[#aea9a9] text-[1.7em] py-1">{course.title}</div>
 
-        <div className="text-white text-[1.7em] py-1">{course.chapters[currentContent[0]].contents[currentContent[1]].title} </div>
-        <div className="text-[#aea9a9] py-1">{course.chapters[currentContent[0]].contents[currentContent[1]].description} </div>
+        {/* Responsive iframe with 16:9 aspect ratio */}
+        <div className="relative w-full pb-[56.25%]">
+          <iframe
+            className="absolute top-0 left-0 w-full h-full rounded-lg"
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          ></iframe>
+        </div>
+
+        <div className="text-white text-[1.7em] py-1">
+          {course.chapters[currentContent[0]].contents[currentContent[1]].title}
+        </div>
+        <div className="text-[#aea9a9] py-1">
+          {course.chapters[currentContent[0]].contents[currentContent[1]].description}
+        </div>
       </div>
 
-      <div className="w-[35%] h-[90vh] flex flex-col gap-4">
+
+      <div className="lg:w-[35%] md:w-full h-[90vh] flex flex-col gap-4">
         <div className="h-10 flex border-lg relative">
           <button
             className="flex-1 p-4 items-center justify-center flex relative"
@@ -72,7 +82,7 @@ export default function CourseComponent({ course }: CourseComponentProps) {
               transform: isChatOpen ? "translateX(0%)" : "translateX(-100%)",
             }}
           >
-            {isChatOpen && <Chatbox />}
+            {isChatOpen && <Chatbox session={session} />}
           </div>
 
           <div

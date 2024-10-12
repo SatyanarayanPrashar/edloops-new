@@ -1,5 +1,5 @@
 import { SidebarWrapper } from "@/app/components/sidebar-wrapper";
-import { SessionWrapper } from "@/app/components/sessionwarpper";
+// import { SessionWrapper } from "@/app/components/sessionwarpper";
 import { getServerSession } from 'next-auth';
 import { authOptions } from "@/lib/authOptions";
 
@@ -14,9 +14,9 @@ export default async function Layout({
     <html lang="en">
       <body className="mx-0">
         <SidebarWrapper session={session}>
-          <SessionWrapper>
+          {/* <SessionWrapper> */}
             {children}
-          </SessionWrapper>
+          {/* </SessionWrapper> */}
         </SidebarWrapper>
       </body>
     </html>

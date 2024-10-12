@@ -6,17 +6,17 @@ import { SignInForm } from "./components/SigninForm";
 
 export const metadata: Metadata = {
   title: "Login",
-  description: "Open-source Experience Management. Free & open source.",
+  description: "",
 };
 
 const Page = async () => {
   
   return (
     <div className="flex min-h-screen w-full">
-      <div className="flex-1">
+      <div className="flex-1 hidden lg:block">
         <Testimonial />
       </div>
-      <div className="w-[58%] flex flex-col items-center justify-center bg-[#303346]">
+      <div className="w-full flex-1 flex items-center justify-center bg-[#303346]">
         <FormWrapper>
           <SignInForm />
         </FormWrapper>

@@ -14,12 +14,12 @@ export default function Home() {
   const { data: session } = useSession();
 
   return (
-    <div className="bg-[#232736] flex flex-col items-cente text-white">
+    <div className="bg-[#232736] flex flex-col items-center text-white">
       <div className="z--[2] absolute w-full overflow-hidden">
         <img className='w-full opacity-50' src="https://cdn.prod.website-files.com/66cc2bd703ccf308a49a6188/66e9ebfcf14a0bce6e73d5bc_hero-bg-dark.avif" alt="" />
       </div>
       <div className="z--[2] bg-[#232736] h-full mt-[110vh] absolute w-full -mx-[10rem] shadow-[0px_0px_100px_200px_#232736]"></div>
-      <div className="w-full mx-auto rounded-md h-[30rem] mt-[6rem] overflow-hidden">
+      <div className="w-full mx-auto rounded-md sm:h-[20rem] md:h-[25rem] lg:h-[30rem] mt-[6rem]">
         <Vortex
           backgroundColor="transparent"
           rangeY={50}
@@ -60,22 +60,25 @@ export default function Home() {
         </ContainerScroll>
       </div>
       
-      <motion.div
-        initial={{ opacity: 0, paddingTop: "20px" }}
-        whileInView={{ opacity: 1, paddingTop: "0px" }}
-        transition={{ ease: "linear", duration: 1 }}
-        viewport={{ once: true }}
-      >
-        <h1 className='text-xl md:text-3xl mx-[4rem] md:mx-[12rem]'>Navigating Your Learning Journey</h1>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, paddingTop: "20px" }}
-        whileInView={{ opacity: 1, paddingTop: "0px" }}
-        transition={{ ease: "linear", duration: 1 }}
-        viewport={{ once: true }}
-      >
-        <h1 className='my-6 text-4xl md:text-6xl mx-[4rem] md:mx-[12rem]'>Top 1% learning materials curated and crafted into courses</h1>
-      </motion.div>
+      <div>
+        <motion.div
+          initial={{ opacity: 0, paddingTop: "20px" }}
+          whileInView={{ opacity: 1, paddingTop: "0px" }}
+          transition={{ ease: "linear", duration: 1 }}
+          viewport={{ once: true }}
+        >
+          <h1 className='text-xl md:text-3xl mx-[4rem] md:mx-[12rem]'>Navigating Your Learning Journey</h1>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, paddingTop: "20px" }}
+          whileInView={{ opacity: 1, paddingTop: "0px" }}
+          transition={{ ease: "linear", duration: 1 }}
+          viewport={{ once: true }}
+        >
+          <h1 className='my-6 text-4xl md:text-6xl mx-[4rem] md:mx-[12rem]'>Top 1% learning materials curated and crafted into courses</h1>
+        </motion.div>
+      </div>
+
       <div className="h-[20rem] rounded-md flex flex-col antialiased bg-transparent items-center justify-center relative overflow-hidden mt-20">
         <InfiniteMovingCards
           items={testimonials}
@@ -101,7 +104,7 @@ const data = [
           <img
             src="gen-course.png"
             alt="startup template"
-            className="rounded-lg object-cover w-full h-[28rem]"
+            className="rounded-lg object-cover w-full "
           />
       </div>
     ),
@@ -116,7 +119,7 @@ const data = [
         <img
           src="hero-img.png"
           alt="cards template"
-          className="rounded-lg object-cover w-full h-[28rem]"
+          className="rounded-lg object-cover w-full"
         />
       </div>
     ),
@@ -131,7 +134,7 @@ const data = [
         <img
           src="https://assets.aceternity.com/pro/bento-grids.png"
           alt="cards template"
-          className="rounded-lg object-cover w-full h-[30rem]"
+          className="rounded-lg object-cover w-full"
         />
       </div>
     ),

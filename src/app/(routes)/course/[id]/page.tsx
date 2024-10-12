@@ -1,8 +1,7 @@
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 import CourseComponent from '../_components/courseContainer';
 import { fetchCourseData } from '@/lib/fetchcourse';
 import { authOptions } from '@/lib/authOptions';
+import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 
 export async function generateMetadata({ params }: { params: { id: number } }) {
@@ -23,20 +22,15 @@ export async function generateMetadata({ params }: { params: { id: number } }) {
   };
 }
 
-
 export default async function CoursePage({ params }: { params: { id: number } }) {
   const session = await getServerSession(authOptions);
-  
-  if (!session) {
-    return redirect('/api/auth/signin');
-  }
 
   const courseId = params.id;
   const courseData = await fetchCourseData(Number(courseId));
 
   if(courseData){
     return (
-      <CourseComponent course={courseData} />
+      <CourseComponent course={courseData} session={session} />
     )
   }else{
     return (
