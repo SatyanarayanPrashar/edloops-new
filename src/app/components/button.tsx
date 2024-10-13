@@ -14,7 +14,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ label, classname, href, onclick, children, disabled }) => {
   if (href) {
     return (
-      <Link className={cn("px-4 bg-[#20232D] h-10 justify-center items-center flex rounded-lg hover:cursor-pointer", classname)} href={href}>
+      <Link className={cn("px-4 bg-[#20232D] hover:bg-[#20232D]/70 h-10 justify-center items-center flex rounded-lg hover:cursor-pointer", classname)} href={href}>
         {label}
         {children}
       </Link>
@@ -22,7 +22,7 @@ const Button: React.FC<ButtonProps> = ({ label, classname, href, onclick, childr
   } else {
     return (
       <button
-      className={cn("my-2 px-4 bg-[#20232D] h-10 rounded-lg justify-center items-center flex hover:cursor-pointer", classname)}
+      className={cn("my-2 px-4 bg-[#20232D] hover:bg-[#20232D]/70 h-10 rounded-lg justify-center items-center flex hover:cursor-pointer", classname)}
       onClick={onclick}
       disabled={disabled || false}
       >

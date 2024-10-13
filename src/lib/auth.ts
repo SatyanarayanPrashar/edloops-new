@@ -3,7 +3,7 @@ import type { NextAuthOptions } from "next-auth"
 import { getServerSession } from "next-auth"
 
 export const config = {
-    providers: [], // rest of your config
+    providers: [],
 } satisfies NextAuthOptions
 
 // Use it in server contexts
