@@ -1,13 +1,16 @@
 import Link from 'next/link';
 import { CgAdd } from "react-icons/cg";
 import { prisma } from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from "@/lib/authOptions";
 
 export default async function DashBoard() {
+  const session = await getServerSession(authOptions);
+
   const allCourses = await prisma.courses.findMany();
 
-  // Segregate courses into published and unpublished (created)
   const publishedCourses = allCourses.filter(course => course.published);
-  const createdCourses = allCourses.filter(course => !course.published);
+  const createdCourses = allCourses.filter(course => !course.published && course.creatorId === Number(session?.user.id));
 
   return (
     <div className="flex flex-col px-7 gap-7 w-[100%] text-[#eceef8]">
