@@ -39,6 +39,5 @@ export default async function CoursePage({ params }: { params: { id: number } })
         <Link href={"/dashboard"} className='underline'>Return to dashboard</Link>
       </div>
     )
-
   }
 }

@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
 import Modal from "../../components/model";
 import { type Course, type Content, type Chapter, type Enrollment } from "@/types/resource";
-import ResourceForm from "./[components]/resourceForm";
-import ChapterContainer from "./[components]/chapters";
+import ResourceForm from "./_components/resourceForm";
+import ChapterContainer from "./_components/chapters";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+import Button from "@/app/components/button";
 
 export default function Course() {
   const { data: session } = useSession();
@@ -140,7 +141,7 @@ export default function Course() {
 
   return (
     <div className="flex flex-col px-7 pt-1 gap-7 w-full justify-center items-center">
-      <div className="relative w-1/2 border-dashed border-[1px] rounded-lg">
+      <div className="relative w-full md:w-1/2 lg:w-1/2 border-dashed border-[1px] rounded-lg">
         <div className="w-full rounded-lg flex items-center justify-center">
           <input
           className="absolute w-1/2 rounded-lg bg-gray-100 text-[18px] p-2 text-black border-[1px]"
@@ -167,7 +168,8 @@ export default function Course() {
           onChange={(e) => setCourse({ ...course, description: e.target.value })}
         />
       </div>
-      <div className="flex flex-col items-center w-1/2">
+
+      <div className="relative flex flex-col w-full md:w-1/2 lg:w-1/2">
         {course.chapters && course.chapters.map((chapter, index) => (
           <div key={chapter.id} className="w-full">
             <ChapterContainer
@@ -194,12 +196,18 @@ export default function Course() {
         </div>
       </div>
 
-      <button
-        className="fixed bottom-10 right-10 rounded-lg p-2 mt-2 bg-slate-500 w-20 text-white"
-        onClick={() => { saveCourse(); }}
-      >
-        {course.id !== 0 ? "Update" : "Save"}
-      </button>
+      <div className="fixed bottom-10 right-10">
+        {course.id != 0 && (
+          <Button
+          onclick={ ()=>{} }
+            label={"Publish"}
+          />
+        )}
+        <Button
+          onclick={() => { saveCourse(); }}
+          label= {course.id != 0 ? "Update" : "Save"}
+        />
+      </div>
 
       <Modal isOpen={iscontentFormOpen} onClose={closecontentForm}>
         {currentChapterIndex !== null && (

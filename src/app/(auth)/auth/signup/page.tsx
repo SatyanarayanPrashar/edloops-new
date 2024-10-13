@@ -1,5 +1,5 @@
-import { FormWrapper } from "@/app/(auth)/auth/components/FormWrapper";
-import { Testimonial } from "@/app/(auth)/auth/components/Testimonial";
+import { FormWrapper } from "@/app/(auth)/auth/_components/FormWrapper";
+import { Testimonial } from "@/app/(auth)/auth/_components/Testimonial";
 import { SignupForm } from "@/app/(auth)/auth/signup/components/SignupForm";
 import { Metadata } from "next";
 

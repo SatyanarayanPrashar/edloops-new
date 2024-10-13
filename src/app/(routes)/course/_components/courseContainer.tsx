@@ -30,10 +30,7 @@ export default function CourseComponent({ course, session }: CourseComponentProp
   return (
     <div className="flex lg:px-7 gap-7 w-full flex-col md:flex-col lg:flex-row ">
       <div className="flex flex-col gap-2 lg:w-[65%] md:w-full">
-        {/* Display the Content Title and Video */}
         <div className="text-[#aea9a9] text-[1.7em] py-1">{course.title}</div>
-
-        {/* Responsive iframe with 16:9 aspect ratio */}
         <div className="relative w-full pb-[56.25%]">
           <iframe
             className="absolute top-0 left-0 w-full h-full rounded-lg"
@@ -50,7 +47,6 @@ export default function CourseComponent({ course, session }: CourseComponentProp
           {course.chapters[currentContent[0]].contents[currentContent[1]].description}
         </div>
       </div>
-
 
       <div className="lg:w-[35%] md:w-full h-[90vh] flex flex-col gap-4">
         <div className="h-10 flex border-lg relative">

@@ -1,8 +1,10 @@
+import Button from "@/app/components/button";
 import { authOptions } from "@/lib/authOptions";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from 'next-auth';
 import Link from "next/link";
 import { redirect } from 'next/navigation';
+import { BiEdit } from "react-icons/bi";
 import { CgAdd } from "react-icons/cg";
 
 
@@ -36,17 +38,16 @@ export default async function Profile() {
                         {user.createdCourses.map(course => (
                             <div key={course.id} className="relative overflow-hidden w-full">
                                 <Link href={`/course/${course.id}`}>
-                                    {/* Aspect ratio 16:9 for maintaining width-to-height ratio */}
                                     <div className="relative w-full pb-[56.25%]">
                                         <img src={course.image || "default-course.jpg"}
                                             className="absolute inset-0 h-full w-full object-cover border-[1px] rounded-lg" />
                                     </div>
                                     <p className="mt-2">{course.title}</p>
                                 </Link>
+                                <Button label={""} href={`/create-course/edit/${course.id}`} classname="absolute top-1 right-3 hover:bg-[#20232D] bg-[#20232D]/20 text-white/40 hover:text-white/80 border-[1px] border-[#20232D]"> <BiEdit/> </Button>
                             </div>
                         ))}
                         <Link href={'/create-course'} className="relative flex flex-col justify-center items-center border-dashed border-[#eceef8] mb-20 border-[1px] rounded-lg w-full">
-                            {/* Aspect ratio 16:9 */}
                             <div className="relative w-full pb-[56.25%]">
                                 <div className="absolute inset-0 flex justify-center items-center">
                                     <CgAdd size={24} />
