@@ -4,6 +4,39 @@ import { Course, Chapter, Content } from '@/types/resource';
 
 const prisma = new PrismaClient();
 
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get('id');
+
+  if (!id) {
+    return NextResponse.json({ error: 'Course ID is required' }, { status: 400 });
+  }
+
+  try {
+    const course = await prisma.courses.findUnique({
+      where: {
+        id: Number(id),
+      },
+      include: {
+        chapters: {
+          include: {
+            contents: true, 
+          },
+        },
+      },
+    });
+
+    if (!course) {
+      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(course, { status: 200 });
+  } catch (error) {
+    console.error('Error retrieving course:', error);
+    return NextResponse.json({ error: 'Failed to retrieve the course' }, { status: 500 });
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const body: Course = await req.json();

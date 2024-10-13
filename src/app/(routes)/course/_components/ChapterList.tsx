@@ -5,20 +5,52 @@ import { Chapter } from "@/types/resource";
 import { useState } from "react";
 import { BsYoutube } from "react-icons/bs";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import Button from "@/app/components/button";
 
 interface ChapterListProps {
+  courseId: number;
   chapters: Chapter[];
   onSelect: (content: [number, number]) => void;
+  isEnrolled: boolean;
+  onEnroll: ()=>void;
 }
 
-export default function ChapterList({ chapters, onSelect }: ChapterListProps) {
+export default function ChapterList({ courseId, chapters, onSelect, isEnrolled, onEnroll }: ChapterListProps) {
   const [showChapter, setShowChapter] = useState<number | null>(null);
   const [currentContent, setCurrentContent] = useState<[number, number]>([0, 0]);
   const [hoveredChapter, setHoveredChapter] = useState<number | null>(null);
 
+  const [isEnrolling, setIsEnrolling] = useState(false);
+  
+
+  const handleEnrollment = async () => {
+    try {
+      setIsEnrolling(true)
+      const response = await fetch('/api/course/enrolledcourses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ courseId }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to enroll in the course');
+      }
+
+      // setIsEnrolled(true);
+      onEnroll();
+      alert('You have successfully enrolled in the course!');
+    } catch (error) {
+      console.error('Error enrolling in course:', error);
+    } finally {
+      setIsEnrolling(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2 w-full h-full overflow-y-auto pr-4 scrollbar-track-black scrollbar-thumb-gray-700">
-      {chapters.map((item, index) => (
+      {chapters.slice(0, isEnrolled ? chapters.length : 1).map((item, index) => (
         <div
           key={index}
           className={cn(
@@ -57,8 +89,8 @@ export default function ChapterList({ chapters, onSelect }: ChapterListProps) {
                     currentContent?.[1] === i && currentContent?.[0] === index && "bg-[#303346] px-4 py-2 rounded-lg"
                   )}
                   onClick={() => {
-                    setCurrentContent([index, i])
-                    onSelect([index, i])
+                    setCurrentContent([index, i]);
+                    onSelect([index, i]);
                   }}
                 >
                   <BsYoutube color="red" size={20} />
@@ -69,6 +101,18 @@ export default function ChapterList({ chapters, onSelect }: ChapterListProps) {
           )}
         </div>
       ))}
+
+      {!isEnrolled && (
+        <div className= "flex flex-col gap-2 rounded-lg bg-[#20232D] p-4 justify-center items-center">
+          <p className="">Please enroll to view full course</p>
+          <Button
+            label="Enroll"
+            classname="bg-blue-500 hover:bg-blue-500/60 mt-2"
+            onclick={handleEnrollment}
+            disabled={isEnrolling}
+          />
+        </div>
+      )}
     </div>
   );
 }

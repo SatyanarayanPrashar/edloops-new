@@ -8,7 +8,7 @@ import type { Content } from "@/types/resource";
 
 interface ResourceFormProps {
   onSubmit: (content: Content) => void;
-  chapterId: number; // New prop for chapterId
+  chapterId: number;
 }
 
 export default function ResourceForm({ onSubmit, chapterId }: ResourceFormProps) {
@@ -77,10 +77,10 @@ export default function ResourceForm({ onSubmit, chapterId }: ResourceFormProps)
         start: -1,
         end: -1,
         id: 0,
-        chapterId: chapterId // Assign the passed chapterId to the content
+        chapterId: chapterId
       };
 
-      onSubmit(newContent); // Submit content with chapterId
+      onSubmit(newContent);
     } catch (error) {
       console.error("Error creating resource:", error);
     } finally {
