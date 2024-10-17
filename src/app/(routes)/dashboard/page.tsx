@@ -35,14 +35,14 @@ export default async function DashBoard() {
             </div>
           </div>
         </Link>
-        <div  className="relative flex flex-col justify-center items-center border-dashed border-[#eceef8] border-[1px] rounded-lg w-full overflow-hidden">
+        <Link href={'/quizz/new'} className="relative flex flex-col justify-center items-center border-dashed border-[#eceef8] border-[1px] rounded-lg w-full overflow-hidden">
           <div className="relative w-full pb-[56.25%]">
             <div className="absolute inset-0 flex justify-center items-center">
               <CgAdd size={24} />
               Create Quiz
             </div>
           </div>
-        </div>
+        </Link>
       </div>
 
       <h1 className='text-[1.5rem] my-4'>Explore Courses by Others</h1>

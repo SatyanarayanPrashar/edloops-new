@@ -21,6 +21,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   verificationToken   VerificationToken[]
+
+  quizzes  Quiz[]
 }
 
 model VerificationToken {
@@ -75,4 +77,40 @@ model Content {
   end         Int?
   chapter     Chapters  @relation(fields: [chapterId], references: [id])
   chapterId   Int
+}
+
+
+//quiz
+model Quiz {
+  id          Int            @id @default(autoincrement())
+  name        String
+  description String
+  userId      Int
+  user        User           @relation(fields: [userId], references: [id])
+  questions   Question[]
+  submissions QuizSubmission[]
+}
+
+model Question {
+  id           Int            @id @default(autoincrement())
+  questionText String
+  quizzId      Int
+  quizz        Quiz           @relation(fields: [quizzId], references: [id])
+  answers      QuestionAnswer[]
+}
+
+model QuestionAnswer {
+  id         Int    @id @default(autoincrement())
+  questionId Int
+  answerText String
+  isCorrect  Boolean
+  question   Question @relation(fields: [questionId], references: [id])
+}
+
+model QuizSubmission {
+  id        Int      @id @default(autoincrement())
+  quizzId   Int
+  score     Int
+  createdAt DateTime @default(now())
+  quizz     Quiz     @relation(fields: [quizzId], references: [id])
 }

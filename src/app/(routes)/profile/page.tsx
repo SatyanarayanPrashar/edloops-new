@@ -1,12 +1,11 @@
 import Button from "@/app/components/button";
-import { authOptions } from "@/lib/authOptions";
 import { prisma } from "@/lib/prisma";
+import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from 'next-auth';
 import Link from "next/link";
 import { redirect } from 'next/navigation';
 import { BiEdit } from "react-icons/bi";
 import { CgAdd } from "react-icons/cg";
-
 
 export default async function Profile() {
     const session = await getServerSession(authOptions);
